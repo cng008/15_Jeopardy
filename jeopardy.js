@@ -20,28 +20,24 @@
 
 let categories = [];
 
-
-/** Get NUM_CATEGORIES random category from API.
- *
- * Returns array of category ids
- */
-
-function getCategoryIds() {
+/** Get NUM_CATEGORIES random category from API. */
+async function getCategoryIds() {
+  const res = await axios.get(`https://jservice.io/api/categories?count=100`);
+  const catIds = res.data.map(result => result.id);
+  return _.sampleSize(catIds, 6); //Returns an array of 6 randomly picked categories
 }
 
-/** Return object with data about a category:
- *
- *  Returns { title: "Math", clues: clue-array }
- *
- * Where clue-array is:
- *   [
- *      {question: "Hamlet Author", answer: "Shakespeare", showing: null},
- *      {question: "Bell Jar Author", answer: "Plath", showing: null},
- *      ...
- *   ]
- */
-
-function getCategory(catId) {
+/** Returns object with data about a category: */
+async function getCategory(catId) {
+  const res = await axios.get(`https://jservice.io/api/category?id=${catId}`);
+  let allClues = res.data.clues;
+  let randomClues = _.sampleSize(allClues, 5); //randomly selects 5 questions for category
+  let clues = randomClues.map(clue => ({
+    question: clue.question,
+    answer: clue.answer,
+    showing: null
+  }));
+  return { title: res.data.title, clues };
 }
 
 /** Fill the HTML table#jeopardy with the categories & cells for questions.
@@ -51,7 +47,6 @@ function getCategory(catId) {
  *   each with a question for each category in a <td>
  *   (initally, just show a "?" where the question/answer would go.)
  */
-
 async function fillTable() {
 }
 
@@ -62,20 +57,16 @@ async function fillTable() {
  * - if currently "question", show answer & set .showing to "answer"
  * - if currently "answer", ignore click
  * */
-
 function handleClick(evt) {
 }
 
 /** Wipe the current Jeopardy board, show the loading spinner,
  * and update the button used to fetch data.
  */
-
 function showLoadingView() {
-
 }
 
 /** Remove the loading spinner and update the button used to fetch data. */
-
 function hideLoadingView() {
 }
 
@@ -85,14 +76,9 @@ function hideLoadingView() {
  * - get data for each category
  * - create HTML table
  * */
-
 async function setupAndStart() {
 }
 
-/** On click of start / restart button, set up game. */
+/** TODO: On click of start / restart button, set up game. */
 
-// TODO
-
-/** On page load, add event handler for clicking clues */
-
-// TODO
+/** TODO: On page load, add event handler for clicking clues */
