@@ -3,5 +3,81 @@
   #060ce9
   #28a200
   #8d2ab5
-  #74119c
-*/
+  #74119c  
+
+  rgb(172,38,113)
+  rgb(104,82,249)
+  rgb(32,65,162)
+  rgb(246,81,76)
+  rgb(247,164,57)
+  rgb(49,109,194)
+  rgb(57,107,158)
+  rgb(12,73,135)
+  rgb(11,53,97)
+  */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #2a3698;
+  color: rgb(247, 164, 57);
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Bungee Hairline', cursive;
+  font-size: 3em;
+  color: white;
+}
+
+#game {
+  margin: 50px;
+}
+
+#board {
+  width: 100%;
+  background-color: rgb(49, 109, 194);
+  vertical-align: center;
+  /* overflow-x: auto; */
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
+  border: 8px solid #2a3698;
+}
+
+th {
+  height: 50px;
+  color: white;
+}
+
+td {
+  height: 100px;
+  min-width: 100px;
+}
+
+td:hover {
+  background-color: #2a3698;
+}
+
+/* start and restart button styling */
+#startGame,
+#restartGame {
+  font-size: 20px;
+  color: rgb(104, 82, 249);
+  background: rgb(233, 233, 233);
+  padding: 0.3em;
+  margin: 3em;
+  border: 2px solid rgb(104, 82, 249);
+  border-radius: 16px;
+}
+
+#startGame:hover,
+#restartGame:hover {
+  background: rgb(247, 164, 57);
+  border: 2px solid rgb(247, 164, 57);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+}
