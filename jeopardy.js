@@ -17,15 +17,16 @@
 //    },
 //    ...
 //  ]
+let categories = [];
 const numOfCategories = 6;
 const numOfClues = 5;
-let categories = [];
 
 /** Get NUM_CATEGORIES random category from API. */
 async function getCategoryIds() {
   const res = await axios.get(`https://jservice.io/api/categories?count=100`);
   const catIds = res.data.map(result => result.id);
   return _.sampleSize(catIds, numOfCategories); //Returns an array of 6 randomly picked categories
+  //Lodash -Gets n random elements at unique keys from collection up to the size of collection.
 }
 
 /** Returns object with data about a category: */
@@ -55,7 +56,7 @@ async function fillTable() {
 
   // Add header row for numOfCategories
   for (let x = 0; x < numOfCategories; x++) {
-    $('thead').append($('<th>').attr('id', x).text('category'));
+    $('thead').append($('<th>').attr('id', x).text(categories[x].title));
   }
   $('#board').append($('thead'));
 
@@ -65,7 +66,7 @@ async function fillTable() {
     $('tbody').append($('<tr>').attr('id', `tier${y}`));
     // creates a td and appends it to the tr above, loops until itiration is equal to numOfCategories (width)
     for (let x = 0; x < numOfCategories; x++) {
-      $(`#tier${y}`).append($('<td>').attr('id', `clue${y}-cat${x}`).text('?'));
+      $(`#tier${y}`).append($('<td>').attr('id', `${y}-${x}`).text('?'));
     }
   }
 }
@@ -78,13 +79,32 @@ async function fillTable() {
  * - if currently "answer", ignore click
  * */
 function handleClick(evt) {
+  let id = evt.target.id;
+  let [catId, clueId] = id.split('-'); //turns td id into an array, '-' is the separator
+  let clue = categories[catId].clues[clueId];
+
+  let text;
+  // console.log(evt.target.id.question);
+  if (clue.showing === null) {
+    text = clue.question;
+    evt.target.style.color = 'white';
+    clue.showing = 'question';
+  } else if (clue.showing === 'question') {
+    text = clue.answer;
+    clue.showing = 'answer';
+  } else {
+    //if already showing answer; ignore
+    return;
+  }
+  // Update text of cell
+  $(`#${catId}-${clueId}`).text(text);
 }
 
 /** Wipe the current Jeopardy board, show the loading spinner,
  * and update the button used to fetch data.
  */
 function showLoadingView() {
-  $('#loader').show(2000, hideLoadingView);
+  $('#loader').show(1000, hideLoadingView);
   setupAndStart();
   $('#startGame').hide();
   $('#game').hide();
@@ -98,23 +118,27 @@ function hideLoadingView() {
   $('#startGame').text('Reset Game');
 }
 
-/** Start game:
- *
+// START GAME ON BUTTON CLICK
+/**
  * - get random category Ids
  * - get data for each category
  * - create HTML table
  * */
 async function setupAndStart() {
-  const catIds = await getCategoryIds();
+  categories = [];
+  let catIds = await getCategoryIds();
+
+  for (let id of catIds) {
+    categories.push(await getCategory(id)); //push (6) sampleSize into categories array
+  }
   fillTable();
 }
 
-/** TODO: On click of start / restart button, set up game. */
-//START GAME ON BUTTON CLICK
+/** On click of start / restart button, set up game. */
 $('#startGame').on('click', () => {
   $('#board').empty();
   showLoadingView();
 });
 
-/** TODO: On page load, add event handler for clicking clues */
+/** On page load, add event handler for clicking clues */
 $('#board').on('click', 'td', handleClick);
