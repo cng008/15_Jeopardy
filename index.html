@@ -6,14 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jeopardy!</title>
   <link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="jeopardy.css">
 </head>
 <body>
   <h1>Jeopardy!</h1>
-  <div id="game" style="display: none">
+  
+  <div id="game">
     <table id="board"></table>
   </div>
+
+  <div id="loader"></div>
+
   <button id="startGame">Start Game</button>
 
 <script src="https://unpkg.com/jquery"></script>

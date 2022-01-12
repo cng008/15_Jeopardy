@@ -29,10 +29,6 @@ h1 {
   color: white;
 }
 
-#game {
-  margin: 50px;
-}
-
 #board {
   width: 100%;
   background-color: rgb(49, 109, 194);
@@ -59,6 +55,50 @@ td {
 
 td:hover {
   background-color: #2a3698;
+}
+
+/* Center the loader */
+#loader {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 20%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 0 -40px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #28a200;
+  border-right: 16px solid rgb(104, 82, 249);
+  border-bottom: 16px solid rgb(172, 38, 113);
+  border-left: 16px solid rgb(49, 109, 194);
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#game {
+  display: none;
+  text-align: center;
+  margin: 50px;
 }
 
 /* start and restart button styling */

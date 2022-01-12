@@ -19,7 +19,7 @@
 //  ]
 const numOfCategories = 6;
 const numOfClues = 5;
-const categories = [];
+let categories = [];
 
 /** Get NUM_CATEGORIES random category from API. */
 async function getCategoryIds() {
@@ -84,10 +84,18 @@ function handleClick(evt) {
  * and update the button used to fetch data.
  */
 function showLoadingView() {
+  $('#loader').show(2000, hideLoadingView);
+  setupAndStart();
+  $('#startGame').hide();
+  $('#game').hide();
 }
 
 /** Remove the loading spinner and update the button used to fetch data. */
 function hideLoadingView() {
+  $('#loader').hide();
+  $('#game').show();
+  $('#startGame').show();
+  $('#startGame').text('Reset Game');
 }
 
 /** Start game:
@@ -97,20 +105,16 @@ function hideLoadingView() {
  * - create HTML table
  * */
 async function setupAndStart() {
+  const catIds = await getCategoryIds();
+  fillTable();
 }
 
 /** TODO: On click of start / restart button, set up game. */
 //START GAME ON BUTTON CLICK
-$('#startGame').one('click', () => {
-  $('#game').show();
-  fillTable();
-  $('#startGame').text('Reset Game');
-});
-
-// RESTART GAME BUTTON
-$('#startGame').addEventListener('click', () => {
+$('#startGame').on('click', () => {
   $('#board').empty();
-  fillTable();
+  showLoadingView();
 });
 
 /** TODO: On page load, add event handler for clicking clues */
+$('#board').on('click', 'td', handleClick);
