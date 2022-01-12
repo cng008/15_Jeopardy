@@ -1,23 +1,15 @@
-/* some colors you may find useful:
-  #115ff4
-  #060ce9
+/* color pallete
+  #2a3698
   #28a200
-  #8d2ab5
-  #74119c  
-
   rgb(172,38,113)
   rgb(104,82,249)
-  rgb(32,65,162)
   rgb(246,81,76)
   rgb(247,164,57)
   rgb(49,109,194)
-  rgb(57,107,158)
-  rgb(12,73,135)
-  rgb(11,53,97)
   */
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inconsolata', monospace;
   background-color: #2a3698;
   color: rgb(247, 164, 57);
   text-align: center;
@@ -27,6 +19,7 @@ h1 {
   font-family: 'Bungee Hairline', cursive;
   font-size: 3em;
   color: white;
+  text-shadow: rgb(246, 81, 76) 2px 2px;
 }
 
 #board {
@@ -41,16 +34,23 @@ th,
 td {
   border-collapse: collapse;
   border: 8px solid #2a3698;
+  margin: auto;
 }
 
 th {
-  height: 50px;
+  text-transform: uppercase;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  text-shadow: rgb(172, 38, 113) 1px 1px;
+  height: 4em;
   color: white;
+  padding: 10px;
 }
 
 td {
   height: 100px;
   min-width: 100px;
+  padding: 5px;
 }
 
 td:hover {
@@ -62,11 +62,8 @@ td:hover {
   display: none;
   position: absolute;
   z-index: 1;
-  top: 20%;
+  top: 10%;
   left: 50%;
-  width: 50px;
-  height: 50px;
-  margin: 0 -40px;
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #28a200;
@@ -79,18 +76,34 @@ td:hover {
 
 @-webkit-keyframes spin {
   0% {
+    opacity: 1;
+    width: 50px;
+    height: 50px;
+    margin: 0 -40px;
     -webkit-transform: rotate(0deg);
   }
   100% {
+    opacity: 1;
+    width: 50px;
+    height: 50px;
+    margin: 0 -40px;
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes spin {
   0% {
+    opacity: 1;
+    width: 50px;
+    height: 50px;
+    margin: 0 -40px;
     transform: rotate(0deg);
   }
   100% {
+    opacity: 1;
+    width: 50px;
+    height: 50px;
+    margin: 0 -40px;
     transform: rotate(360deg);
   }
 }
@@ -108,7 +121,7 @@ td:hover {
   color: rgb(104, 82, 249);
   background: rgb(233, 233, 233);
   padding: 0.3em;
-  margin: 3em;
+  margin: 1em;
   border: 2px solid rgb(104, 82, 249);
   border-radius: 16px;
 }
