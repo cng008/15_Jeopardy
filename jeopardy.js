@@ -32,6 +32,7 @@ async function getCategoryIds() {
 /** Returns object with data about a category: */
 async function getCategory(catId) {
   const res = await axios.get(`https://jservice.io/api/category?id=${catId}`);
+
   let allClues = res.data.clues;
   let randomClues = _.sampleSize(allClues, numOfClues); //randomly selects 5 questions for category
   let clues = randomClues.map(clue => ({
@@ -50,23 +51,24 @@ async function getCategory(catId) {
  *   (initally, just show a "?" where the question/answer would go.)
  */
 async function fillTable() {
+  //add header row for categories and rows for clues; append both to table board
   $('#board')
     .append($('<thead>').attr('id', 'header'))
     .append($('<tbody>').attr('id', 'clues'));
 
-  // Add header row for numOfCategories
+  //add header cells for numOfCategories
   for (let x = 0; x < numOfCategories; x++) {
     $('thead').append($('<th>').attr('id', x).text(categories[x].title));
   }
   $('#board').append($('thead'));
 
   // creates main board based on set numOfCategories (WIDTH) x numOfClues (HEIGHT)
-  // creates a tr until the loop has iterated Y-times
+  // add rows with questions for each category
   for (let y = 0; y < numOfClues; y++) {
-    $('tbody').append($('<tr>').attr('id', `tier${y}`));
+    $('tbody').append($('<tr>').attr('id', `${y}`));
     // creates a td and appends it to the tr above, loops until itiration is equal to numOfCategories (width)
     for (let x = 0; x < numOfCategories; x++) {
-      $(`#tier${y}`).append($('<td>').attr('id', `${y}-${x}`).text('?'));
+      $(`#${y}`).append($('<td>').attr('id', `${x}-${y}`).text('?'));
     }
   }
 }
@@ -82,16 +84,17 @@ function handleClick(evt) {
   let id = evt.target.id;
   let [catId, clueId] = id.split('-'); //turns td id into an array, '-' is the separator
   let clue = categories[catId].clues[clueId];
-
   let text;
-  // console.log(evt.target.id.question);
+
   if (clue.showing === null) {
     text = clue.question;
-    evt.target.style.color = 'white';
     clue.showing = 'question';
+    evt.target.style.color = 'white';
   } else if (clue.showing === 'question') {
     text = clue.answer;
     clue.showing = 'answer';
+    evt.target.style.backgroundColor = '#2a3698';
+    evt.target.style.boxShadow = '1px 1px 10px rgb(16, 14, 59) inset';
   } else {
     //if already showing answer; ignore
     return;
@@ -104,10 +107,11 @@ function handleClick(evt) {
  * and update the button used to fetch data.
  */
 function showLoadingView() {
-  $('#loader').show(1000, hideLoadingView);
-  setupAndStart();
+  $('#loader').show(2000, hideLoadingView);
   $('#startGame').hide();
   $('#game').hide();
+  $('#board').empty();
+  setupAndStart();
 }
 
 /** Remove the loading spinner and update the button used to fetch data. */
@@ -135,10 +139,7 @@ async function setupAndStart() {
 }
 
 /** On click of start / restart button, set up game. */
-$('#startGame').on('click', () => {
-  $('#board').empty();
-  showLoadingView();
-});
+$('#startGame').on('click', showLoadingView);
 
 /** On page load, add event handler for clicking clues */
 $('#board').on('click', 'td', handleClick);

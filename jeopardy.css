@@ -38,6 +38,7 @@ td {
 }
 
 th {
+  background-color: rgb(38, 100, 189);
   text-transform: uppercase;
   font-family: Helvetica, sans-serif;
   font-weight: bold;
@@ -49,12 +50,17 @@ th {
 
 td {
   height: 100px;
-  min-width: 100px;
-  padding: 5px;
+  width: 100px;
+  padding: 8px;
+  line-height: 1.4;
+}
+
+td:after {
+  content: '\00A0';
 }
 
 td:hover {
-  background-color: #2a3698;
+  background-color: rgb(104, 82, 249);
 }
 
 /* Center the loader */
@@ -62,7 +68,7 @@ td:hover {
   display: none;
   position: absolute;
   z-index: 1;
-  top: 10%;
+  top: 20%;
   left: 50%;
   border: 16px solid #f3f3f3;
   border-radius: 50%;
