@@ -42,4 +42,5 @@ This project was made using the following technologies:
 - [Javascript](https://www.javascript.com)
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [Axios](https://axios-http.com/docs/intro)
 - [VSCode](https://code.visualstudio.com/docs)
